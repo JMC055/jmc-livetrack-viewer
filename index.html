@@ -1,30 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JMC LiveTrack</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>JMC LiveTrack</h1>
+<div class="container">
 
-        <div class="card">
-            <p>Distance: <span id="distance">--</span> km</p>
-            <p>Allure Moy: <span id="pace">--</span></p>
-            <p>Durée: <span id="elapsed">--</span></p>
-            <p>Altitude: <span id="altitude">--</span> m</p>
-            <p>Dénivelé (+) : <span id="dplus">--</span> m</p>
-            <p>Dénivelé (-) : <span id="dminus">--</span> m</p>
-            <p>Latitude: <span id="lat">--</span></p>
-            <p>Longitude: <span id="lon">--</span></p>
-        </div>
+    <h1>JMC LiveTrack</h1>
 
-        <p class="status">Actualisation toutes les 5 sec</p>
+    <div id="map"></div>
+
+    <div class="card">
+        <p>Distance : <span id="distance">--</span> km</p>
+        <p>Allure moyenne : <span id="pace">--</span></p>
+        <p>Durée : <span id="elapsed">--</span></p>
+        <p>Altitude : <span id="altitude">--</span> m</p>
+        <p>Dénivelé (+) : <span id="dplus">--</span> m</p>
+        <p>Dénivelé (-) : <span id="dminus">--</span> m</p>
+        <p>Latitude : <span id="lat">--</span></p>
+        <p>Longitude : <span id="lon">--</span></p>
     </div>
 
+    <p class="status">🟢 Actualisation live toutes les 5 sec</p>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>
+
 </body>
 </html>
