@@ -13,6 +13,14 @@ L.tileLayer(
 
 let marker = L.marker([48.8566, 2.3522]).addTo(map);
 
+/* ===== NEW VARIABLES ===== */
+
+let historyMarkers = [];
+let lastBreadcrumbTime = 0;
+let previousElapsed = 0;
+
+/* ========================= */
+
 function formatElapsed(seconds) {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
@@ -20,6 +28,20 @@ function formatElapsed(seconds) {
 
     return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
+
+/* ===== PURGE OLD SESSION ===== */
+
+function clearHistory() {
+
+    historyMarkers.forEach(m => {
+        map.removeLayer(m);
+    });
+
+    historyMarkers = [];
+    lastBreadcrumbTime = 0;
+}
+
+/* ============================ */
 
 async function fetchData() {
 
@@ -38,6 +60,18 @@ async function fetchData() {
     if (data.length > 0) {
 
         const session = data[0];
+
+        /* ===== Detect new activity ===== */
+
+        if (session.elapsed < previousElapsed) {
+
+            clearHistory();
+
+        }
+
+        previousElapsed = session.elapsed;
+
+        /* =============================== */
 
         document.getElementById("distance").innerText =
             Number(session.distance).toFixed(2);
@@ -65,6 +99,28 @@ async function fetchData() {
 
         let lat = Number(session.lat);
         let lon = Number(session.lon);
+
+        /* ===== Breadcrumb every 120 sec ===== */
+
+        if (session.elapsed - lastBreadcrumbTime >= 120) {
+
+            let oldMarker = L.circleMarker(
+                [lat, lon],
+                {
+                    radius: 6,
+                    color: 'red',
+                    fillColor: 'white',
+                    fillOpacity: 1,
+                    weight: 2
+                }
+            ).addTo(map);
+
+            historyMarkers.push(oldMarker);
+
+            lastBreadcrumbTime = session.elapsed;
+        }
+
+        /* ==================================== */
 
         marker.setLatLng([lat, lon]);
 
