@@ -100,9 +100,9 @@ async function fetchData() {
         let lat = Number(session.lat);
         let lon = Number(session.lon);
 
-        /* ===== Breadcrumb every 120 sec ===== */
+        /* ===== Breadcrumb every 90 sec ===== */
 
-        if (session.elapsed - lastBreadcrumbTime >= 120) {
+        if (session.elapsed - lastBreadcrumbTime >= 90) {
 
             let oldMarker = L.circleMarker(
                 [lat, lon],
